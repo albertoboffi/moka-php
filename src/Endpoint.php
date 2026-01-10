@@ -93,7 +93,9 @@ class Endpoint{
 
             $method = HttpUtils::getMethod();
             $headers = HttpUtils::getHeaders();
-            $body = HttpUtils::getBody();
+            $body = HttpUtils::getBody($this->config);
+
+            if (!$body) return;
 
             $callback = $this->callbacks[$method];
 

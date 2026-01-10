@@ -26,16 +26,41 @@ class HttpUtils{
 
     /**
      * 
-     * @return array Body of the HTTP request
+     * @param array $config - API configuration
+     * @return array Body of the HTTP request, if the content type is whitelisted
      */
-    public static function getBody(): array{
+    public static function getBody(array $config): ?array{
 
-        return json_decode(
+        $content_type = $_SERVER['CONTENT_TYPE'];
 
-            file_get_contents('php://input'),
-            true
+        // accepted content types
 
-        ) ?? [];
+        if (str_starts_with($content_type, 'application/json'))
+            
+            return json_decode(
+
+                file_get_contents('php://input'),
+                true
+
+            ) ?? [];
+
+        if (str_starts_with($content_type, 'multipart/form-data'))
+
+            return array_merge(
+                $_POST,
+                $_FILES
+            );
+
+        if (str_starts_with($content_type, 'application/x-www-form-urlencoded'))
+
+            return $_POST;
+
+        // if the content type is not whitelisted, send error
+
+        self::setHeaders($config);
+        http_response_code(415);
+
+        return null;
 
     }
 
