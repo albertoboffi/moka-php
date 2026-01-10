@@ -13,7 +13,7 @@ class Endpoint{
      */
     public function __construct($config_file){
 
-        $this->config = parse_ini_file(__DIR__ . $config_file, true);
+        $this->config = parse_ini_file(__DIR__ . $config_file, true)['api'];
 
     }
 
