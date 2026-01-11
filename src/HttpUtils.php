@@ -69,19 +69,44 @@ class HttpUtils{
      */
     private static function setHeaders(array $config): void{
 
-        header('Content-Type: application/json');
-        header('Access-Control-Allow-Methods: POST, GET, PATCH, DELETE, OPTIONS, HEAD');
-        header('X-Content-Type-Options: nosniff');
-        header('X-Frame-Options: DENY');
-
-        $extra_headers = $config['extra_headers']
-            ? (', ' . $config['extra_headers'])
+        $extra_request_headers = $config['extra_request_headers']
+            ? (', ' . $config['extra_request_headers'])
             : '';
 
-        header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, Authorization' . $extra_headers);
+        $csp_header = $config['csp_report_only']
+            ? 'Content-Security-Policy-Report-Only'
+            : 'Content-Security-Policy';
+
+        $csp_directives = $config['csp_directives']
+            ? $config['csp_directives']
+            : implode('; ', [
+
+                "default-src 'self'",
+                "script-src 'self'",
+                "font-src 'self' https: data:",
+                "connect-src 'self'",
+                "media-src 'self'",
+                "object-src 'none'",
+                "frame-src 'self'",
+                "frame-ancestors 'none'",
+                "style-src 'self' 'unsafe-inline'",
+                "img-src 'self' https: data: blob:",
+                "upgrade-insecure-requests",
+                "worker-src 'self'"
+
+            ]);
+
+        header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, Authorization' . $extra_request_headers);
+        header('Access-Control-Allow-Methods: POST, GET, PATCH, DELETE, OPTIONS, HEAD');
+        header('Referrer-Policy: strict-origin-when-cross-origin');
+        header('X-Content-Type-Options: nosniff');
+        header('Content-Type: application/json');
+        header('X-Frame-Options: DENY');
 
         $config['origin'] && header('Access-Control-Allow-Origin: ' . $config['origin']);
         $config['allow_credentials'] && header('Access-Control-Allow-Credentials: true');
+
+        header($csp_header . ': ' . $csp_directives);
 
     }
 
