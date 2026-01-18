@@ -1,0 +1,19 @@
+{
+    
+    "name": "albertoboffi/moka-php",
+    "description": "A developer-first PHP library for structured, scalable REST APIs",
+    "type": "library",
+    "license": "MIT",
+    
+    "autoload": {
+        "psr-4": {
+            "MokaPHP\\": "src/"
+        }
+    },
+
+    "require": {
+        "composer/composer": "^2.0",
+        "php": ">=8.1"
+    }
+
+}
