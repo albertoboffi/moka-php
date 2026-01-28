@@ -31,7 +31,7 @@ class HttpUtils{
      */
     public static function getBody(array $config): ?array{
 
-        $content_type = $_SERVER['CONTENT_TYPE'];
+        $content_type = $_SERVER['CONTENT_TYPE'] ?? '';
 
         // accepted content types
 
@@ -69,15 +69,15 @@ class HttpUtils{
      */
     private static function setHeaders(array $config): void{
 
-        $extra_request_headers = $config['extra_request_headers']
+        $extra_request_headers = !empty($config['extra_request_headers'])
             ? (', ' . $config['extra_request_headers'])
             : '';
 
-        $csp_header = $config['csp_report_only']
+        $csp_header = !empty($config['csp_report_only'])
             ? 'Content-Security-Policy-Report-Only'
             : 'Content-Security-Policy';
 
-        $csp_directives = $config['csp_directives']
+        $csp_directives = !empty($config['csp_directives'])
             ? $config['csp_directives']
             : implode('; ', [
 
@@ -103,8 +103,8 @@ class HttpUtils{
         header('Content-Type: application/json');
         header('X-Frame-Options: DENY');
 
-        $config['origin'] && header('Access-Control-Allow-Origin: ' . $config['origin']);
-        $config['allow_credentials'] && header('Access-Control-Allow-Credentials: true');
+        ($config['origin'] ?? false) && header('Access-Control-Allow-Origin: ' . $config['origin']);
+        ($config['allow_credentials'] ?? false) && header('Access-Control-Allow-Credentials: true');
 
         header($csp_header . ': ' . $csp_directives);
 

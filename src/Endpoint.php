@@ -13,7 +13,7 @@ class Endpoint{
      */
     public function __construct($config_file){
 
-        $this->config = parse_ini_file(__DIR__ . $config_file, true)['api'];
+        $this->config = parse_ini_file($config_file, true)['api'];
 
     }
 
@@ -95,7 +95,7 @@ class Endpoint{
             $headers = HttpUtils::getHeaders();
             $body = HttpUtils::getBody($this->config);
 
-            if (!$body) return;
+            if (is_null($body)) return;
 
             $callback = $this->callbacks[$method];
 
