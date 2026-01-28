@@ -1,6 +1,6 @@
 <?php
 
-abstract class HttpCompatibleException extends Exception{
+abstract class HttpCompatibleException extends ErrorException{
 
     /**
      * 
@@ -21,7 +21,7 @@ abstract class HttpCompatibleException extends Exception{
         return array_diff_key(
 
             get_object_vars($this),
-            get_class_vars('Exception')
+            get_class_vars('ErrorException')
 
         );
 

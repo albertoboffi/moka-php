@@ -148,10 +148,10 @@ class HttpUtils{
 
     /**
      * 
-     * @param Exception $exception - Exception causing the error
+     * @param ErrorException $exception - Exception causing the error
      * @param array $config - API configuration
      */
-    public static function sendErrorResponse(array $config, Exception $exception): void{
+    public static function sendErrorResponse(array $config, ErrorException $exception): void{
 
         self::setHeaders($config);
 
@@ -163,6 +163,14 @@ class HttpUtils{
             return;
 
         }
+
+        ($config['log_errors'] ?? false) && self::setBody([
+
+            'error' => $exception->getMessage(),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine()
+
+        ]);
 
         http_response_code(500);
 
