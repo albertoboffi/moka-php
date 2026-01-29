@@ -31,9 +31,15 @@ class HttpUtils{
      */
     public static function getBody(array $config): ?array{
 
-        $content_type = $_SERVER['CONTENT_TYPE'] ?? '';
+        // check if the request contains a body
 
-        // accepted content types
+        $content_length = $_SERVER['CONTENT_LENGTH'] ?? 0;
+
+        if ($content_length === 0) return [];
+
+        // if yes, checks the accepted content types
+
+        $content_type = $_SERVER['CONTENT_TYPE'] ?? '';
 
         if (str_starts_with($content_type, 'application/json'))
             
