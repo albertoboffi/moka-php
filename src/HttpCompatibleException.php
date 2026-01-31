@@ -8,7 +8,7 @@ abstract class HttpCompatibleException extends ErrorException{
      */
     public function __construct(int $code = 400){
 
-        parent::__construct('', $code, null);
+        parent::__construct('', $code, 0);
 
     }
 
