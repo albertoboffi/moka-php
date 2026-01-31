@@ -154,10 +154,10 @@ class HttpUtils{
 
     /**
      * 
-     * @param ErrorException $exception - Exception causing the error
+     * @param Exception $exception - Exception causing the error
      * @param array $config - API configuration
      */
-    public static function sendErrorResponse(array $config, ErrorException $exception): void{
+    public static function sendErrorResponse(array $config, Exception $exception): void{
 
         self::setHeaders($config);
 

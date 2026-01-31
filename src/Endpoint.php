@@ -112,7 +112,7 @@ class Endpoint{
 
         }
 
-        catch(ErrorException $exception){
+        catch(Exception $exception){
 
             HttpUtils::sendErrorResponse($this->config, $exception);
 
