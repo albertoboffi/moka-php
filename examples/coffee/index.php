@@ -1,9 +1,6 @@
 <?php
 
 require_once(__DIR__ . "/../vendor/autoload.php");
-require_once(__DIR__ . "/InvalidCoffeeStructureException.php");
-require_once(__DIR__ . "/InvalidCoffeeTypeException.php");
-require_once(__DIR__ . "/InvalidPouringTechniqueException.php");
 session_start();
 
 use MokaPHP\Endpoint;

@@ -1,6 +1,7 @@
 <?php
 
-require_once __DIR__ . '/HttpCompatibleException.php';
+namespace MokaPHP;
+use Exception;
 
 class HttpUtils{
 

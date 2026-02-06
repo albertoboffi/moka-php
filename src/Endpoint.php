@@ -1,6 +1,9 @@
 <?php
 
-require_once __DIR__ . '/HttpUtils.php';
+namespace MokaPHP;
+
+use Exception;
+use ErrorException;
 
 set_error_handler(function($severity, $message, $file, $line) {
 

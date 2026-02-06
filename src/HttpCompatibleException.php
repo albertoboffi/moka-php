@@ -1,5 +1,8 @@
 <?php
 
+namespace MokaPHP;
+use ErrorException;
+
 abstract class HttpCompatibleException extends ErrorException{
 
     /**
